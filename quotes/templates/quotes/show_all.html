@@ -1,0 +1,23 @@
+<!-- quotes/templates/quotes/show_all.html -->
+
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+<h1>All Jimin Images and Quotes</h1>
+
+{%for url in all_urls%}
+<div><img src={{url}} alt="jimin img" style: width="400px" ; height="auto"></div>
+{% endfor%}
+
+<hr>
+
+{% for quote in all_quotes %}
+<div>
+  <p>"{{ quote }}"</p>
+</div>
+{% endfor %}
+
+
+
+
+{% endblock %}

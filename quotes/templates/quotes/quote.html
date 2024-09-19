@@ -1,0 +1,15 @@
+<!-- quotes/templates/quotes/quote.html -->
+
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+<h1>Jimin</h1>
+
+<div>
+  <img src={{random_url}} alt="jimin img" style: width="400px" ; height="auto">
+</div>
+
+<hr>
+<p>"{{random_quote}}"</p>
+
+{% endblock %}
