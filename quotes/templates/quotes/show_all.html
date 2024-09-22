@@ -5,12 +5,14 @@
 {% block content %}
 <h1>All Jimin Images and Quotes</h1>
 
+<!-- Go through each img and display them -->
 {%for url in all_urls%}
 <div><img src={{url}} alt="jimin img" style: width="400px" ; height="auto"></div>
 {% endfor%}
 
 <hr>
 
+<!-- Go through each quote and display them -->
 {% for quote in all_quotes %}
 <div>
   <p>"{{ quote }}"</p>
