@@ -1,0 +1,13 @@
+## restaurant/urls.py
+## define the URLS for this app
+
+from django.urls import path
+from django.conf import settings
+from . import views
+
+# define a list of valid URL patterns
+urlpatterns = [
+  path('main', views.main, name="main"),
+  path('order', views.order, name="order"),
+  path('confirmation', views.confirmation, name="confirmation"),
+]

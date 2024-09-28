@@ -1,0 +1,30 @@
+<!-- quotes/templates/restaurant/base.html -->
+
+{% load static %}
+<html>
+
+<!-- Set CSS for all templates -->
+
+<head>
+  <title>Restaurant</title>
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+
+<!-- Set this header for all templates -->
+
+<body>
+  <nav>
+    <ul>
+      <li><a href="{% url 'quote' %}">Quote</a></li>
+      <li><a href="{% url 'about' %}">About</a></li>
+      <li><a href="{% url 'show_all' %}">Show All</a></li>
+    </ul>
+  </nav>
+
+  {% block content %}
+  <!-- fill in this section with specific page detail -->
+  {% endblock %}
+
+</body>
+
+</html>

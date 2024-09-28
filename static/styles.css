@@ -28,6 +28,14 @@ h3 {
   color: #1d3987
 }
 
+h4 {
+  color: #1d3987
+}
+
+h5 {
+  color: #1d3987
+}
+
 hr {
   color: aqua
 }
@@ -45,6 +53,11 @@ p {
 
 table {
   border: 1px solid white;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 td {

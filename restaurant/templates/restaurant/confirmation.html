@@ -1,0 +1,30 @@
+<!-- restaurant/confirmation.html
+ Show a basic HTML form to the client -->
+
+{% extends 'restaurant/base.html' %}
+
+{% block content %}
+<h1> Confirm Your Order</h1>
+
+<!-- customter info -->
+<div>
+  <h2> Your Information</h2>
+  <p> Name: {{name}}</p>
+  <p> Phone: {{phone}}</p>
+  <p> Email: {{email}}</p>
+</div>
+<div>
+
+  <!-- show each cart item -->
+  <h2> Ordered Items:</h2>
+  {% for item in cart %}
+  <p>{{item}} </p>
+  {%endfor%}
+</div>
+<div>
+  <!-- total -->
+  <h2> Your total: ${{total}}</h2>
+  <h2> ETA: {{ETA}} </h2>
+</div>
+
+{% endblock %}
