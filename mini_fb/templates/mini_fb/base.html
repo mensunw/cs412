@@ -1,0 +1,28 @@
+<!-- blog/templates/mini_fb/base.html -->
+
+{% load static %}
+<html>
+
+<!-- Set CSS for all templates -->
+
+<head>
+  <title>Our Blog</title>
+  <link rel="stylesheet" href="{% static 'styles-blog.css' %}">
+</head>
+
+<!-- Set this header for all templates -->
+
+<body>
+  <nav>
+    <ul>
+
+    </ul>
+  </nav>
+
+  {% block content %}
+  <!-- fill in this section with specific page detail -->
+  {% endblock %}
+
+</body>
+
+</html>
