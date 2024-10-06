@@ -1,4 +1,4 @@
-<!-- blog/templates/mini_fb/base.html -->
+<!-- mini_fb/templates/mini_fb/base.html -->
 
 {% load static %}
 <html>
@@ -6,8 +6,10 @@
 <!-- Set CSS for all templates -->
 
 <head>
-  <title>Our Blog</title>
+  <title>Our Mini Facebook</title>
   <link rel="stylesheet" href="{% static 'styles-blog.css' %}">
+  <link rel="stylesheet" href="{% static 'styles-footer.css' %}">
+  <link rel="stylesheet" href="{% static 'styles-header.css' %}">
 </head>
 
 <!-- Set this header for all templates -->
@@ -15,13 +17,33 @@
 <body>
   <nav>
     <ul>
-
+      <li><a href="{% url 'show_all_profiles' %}">Show All Profiles</a></li>
     </ul>
   </nav>
 
   {% block content %}
   <!-- fill in this section with specific page detail -->
   {% endblock %}
+
+  <!-- footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-left">
+        <h4>About Me</h4>
+        <p>These are for my CS412 assignments. If you're not a grader, not sure what u doin here ._.</p>
+      </div>
+      <div class="footer-right">
+        <h4>Follow Me</h4>
+        <!-- only for display reasons, not putting actual links! -->
+        <a href="#">Instagram</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">GitHub</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 Mensun CS412 Webpage. All rights unreserved.</p>
+    </div>
+  </footer>
 
 </body>
 

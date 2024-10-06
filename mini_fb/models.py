@@ -5,7 +5,7 @@ from django.db import models
 # Create your models here.
 
 class Profile(models.Model):
-  ''' Encapsulate the idea of one Article by some author '''
+  ''' Encapsulate the idea of one Profile '''
   # data attributes of an Article:
   first_name = models.TextField(blank=False)
   last_name = models.TextField(blank=False)

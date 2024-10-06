@@ -1,0 +1,35 @@
+<!-- blog/templates/blog/show_all.html -->
+
+{% extends 'mini_fb/base.html' %}
+<h1> Show all Profiles </h1>
+
+
+{% block content %}
+
+<!-- display a context variable called profiles -->
+<main class="grid-container">
+  <!-- loop to display each profile -->
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>City</th>
+      <th>Profile Image</th>
+    </tr>
+    {% for p in profiles %}
+    <article>
+      <div>
+
+
+        <tr>
+          <td>{{p.first_name}} {{p.last_name}}</td>
+          <td>{{p.city}}</td>
+          <td><img src="{{p.profile_image_url}}" alt="profile pic was supposed to be here"></td>
+        </tr>
+
+      </div>
+    </article>
+    {% endfor %}
+  </table>
+</main>
+
+{% endblock %}

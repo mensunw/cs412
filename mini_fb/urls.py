@@ -7,5 +7,5 @@ from . import views
 
 # define a list of valid URL patterns
 urlpatterns = [
-  path(r'', views.ShowAllView.as_view(), name="show_all"), 
+  path(r'', views.ShowAllProfilesView.as_view(), name="show_all_profiles"), 
 ]
