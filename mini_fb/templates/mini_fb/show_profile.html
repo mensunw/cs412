@@ -1,0 +1,54 @@
+<!-- mini_fb/templates/mini_fb/profile.html -->
+
+{% extends 'mini_fb/base.html' %}
+<h1> Profile </h1>
+
+
+{% block content %}
+
+<!-- display a context variable called profiles -->
+<main class="grid-container">
+  <!-- Show a profile -->
+
+
+
+  <article class="featured">
+    <div>
+      <h1> {{profile.first_name}} {{profile.last_name}} </h1>
+
+
+
+      <h3>{{profile.city}}</h3>
+      <img src="{{profile.profile_image_url}}" alt="profile pic was supposed to be here" style="height:500; width:500">
+
+
+    </div>
+  </article>
+
+
+  <!-- show the status messages -->
+
+
+
+
+
+  <table>
+    <tr>
+      <th style="color:brown; text-align:center">
+        Status Messages
+      </th>
+    </tr>
+    {% for status in profile.get_status_messages %}
+    <div>
+      <tr>
+        <td style="color: rgb(44, 171, 128); text-align:center">{{status}} </td>
+      </tr>
+    </div>
+    {% endfor %}
+
+  </table>
+
+
+</main>
+
+{% endblock %}

@@ -1,0 +1,22 @@
+<!-- mini_fb/templates/mini_fb/create_profile_form.html -->
+
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+
+<h2> Create a Status Message for {{profile}}</h2>
+
+<!-- display form -->
+<form method="POST">
+  {% csrf_token %}
+  <table>
+    {{form.as_table}}
+  </table>
+  <input type="submit" nname="submit" value="Create Profile">
+</form>
+<!-- create a form to cancel -->
+<form action="{% url 'article'  %}">
+  <input type="submit" name="Cancel" value="Cancel">
+</form>
+
+{% endblock %}
