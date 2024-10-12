@@ -47,7 +47,9 @@
     {% endfor %}
 
   </table>
-
+  <a href="{% url 'create_status' profile.pk %}">
+    <button type="button" style="height:100px; width:400px; color:rgb(163, 87, 28)"> Add a Status Message</button>
+  </a>
 
 </main>
 

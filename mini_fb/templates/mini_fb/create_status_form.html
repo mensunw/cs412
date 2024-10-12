@@ -1,10 +1,10 @@
-<!-- mini_fb/templates/mini_fb/create_profile_form.html -->
+<!-- mini_fb/templates/mini_fb/create_status_form.html -->
 
 {% extends 'mini_fb/base.html' %}
 
 {% block content %}
 
-<h2> Create a Status Message for {{profile}}</h2>
+<h2> Create a Status Message for {{profile.first_name}} {{profile.last_name}}</h2>
 
 <!-- display form -->
 <form method="POST">
@@ -12,11 +12,12 @@
   <table>
     {{form.as_table}}
   </table>
-  <input type="submit" nname="submit" value="Create Profile">
+  <input type="submit" nname="submit" value="Create Status Message">
 </form>
 <!-- create a form to cancel -->
-<form action="{% url 'article'  %}">
+<form action="{% url 'show_profile' profile.pk  %}">
   <input type="submit" name="Cancel" value="Cancel">
 </form>
+
 
 {% endblock %}
