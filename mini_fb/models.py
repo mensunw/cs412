@@ -11,7 +11,8 @@ class Profile(models.Model):
   last_name = models.TextField(blank=False)
   city = models.TextField(blank=False)
   email_address = models.TextField(blank=False)
-  profile_image_url = models.URLField(blank=True)
+  #profile_image_url = models.URLField(blank=True)
+  profile_image_url = models.ImageField(blank=True)
 
   def __str__(self):
     ''' Return a string representation of object '''
@@ -35,4 +36,20 @@ class StatusMessage(models.Model):
   def __str__(self):
     ''' Return a string representation of object '''
     return f'{self.message}'
+  
+  def get_images(self):
+    ''' return queryset of all images for this status message '''
+
+    # use orm to retrieve the images
+    images = Image.objects.filter(status=self)
+    return images
+  
+class Image(models.Model):
+  ''' Encapsulate idea of images for status msgs '''
+
+  # model 1 to many relationship with StatusMessage
+  status = models.ForeignKey("StatusMessage", on_delete=models.CASCADE)
+  image_file = models.ImageField(blank=False)
+  published = models.DateTimeField(auto_now=True)
+  
 
