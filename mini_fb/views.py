@@ -1,10 +1,11 @@
 # mini_fb/views.py
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import * # import all models
 from .forms import * # import forms
 from typing import Any
+from django.shortcuts import get_object_or_404
 # Create your views here.
 
 
@@ -89,6 +90,35 @@ class CreateStatusMessageView(CreateView):
     for file in files:
       image = Image(status=sm, image_file=file)
       image.save()
+    
+    # delegate work to superclass method
+    return super().form_valid(form)
+  
+class UpdateProfileView(UpdateView):
+  ''' view to update profile '''
+  form_class = UpdateProfileForm
+  template_name = 'mini_fb/update_profile_form.html'
+
+  def get_object(self):
+      # Get the Profile object to prefill form
+      return get_object_or_404(Profile, pk=self.kwargs['pk'])
+  
+  def get_success_url(self) -> str:
+    ''' return the url to redirect to on success '''
+    # find the profile identified by the PK from the URL pattern
+    profile = Profile.objects.get(pk=self.kwargs['pk'])
+    return reverse('show_profile', kwargs={'pk':profile.pk})
+  
+  def form_valid(self, form):
+    ''' this method is called after form is validated, before saving data to database '''
+
+    profile = Profile.objects.get(pk=self.kwargs['pk'])
+
+    # attach this profile to the instance of the status message to set its FK
+    form.instance.profile = profile
+
+    # save/update the profile to database
+    form.save()
     
     # delegate work to superclass method
     return super().form_valid(form)
