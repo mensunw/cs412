@@ -24,7 +24,7 @@
         <tr>
           <td>{{p.first_name}} {{p.last_name}}</td>
           <td>{{p.city}}</td>
-          <td><img src="{{p.profile_image_url.url}}" alt="profile pic was supposed to be here"></td>
+          <td><img src="{{p.profile_image_url}}" alt="profile pic was supposed to be here"></td>
           <td> <a href="{% url 'show_profile' p.pk %}"> Visit Profile</a></td>
         </tr>
 

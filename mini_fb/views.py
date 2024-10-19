@@ -78,6 +78,17 @@ class CreateStatusMessageView(CreateView):
 
     # attach this profile to the instance of the status message to set its FK
     form.instance.profile = profile
+
+    # save the status message to database
+    sm = form.save()
+
+    # read the file from the form:
+    files = self.request.FILES.getlist('files')
+
+    # for each file create image object and give it its appropiate fields
+    for file in files:
+      image = Image(status=sm, image_file=file)
+      image.save()
     
     # delegate work to superclass method
     return super().form_valid(form)
