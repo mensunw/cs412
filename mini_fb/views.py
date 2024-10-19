@@ -1,7 +1,7 @@
 # mini_fb/views.py
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import * # import all models
 from .forms import * # import forms
 from typing import Any
@@ -122,3 +122,66 @@ class UpdateProfileView(UpdateView):
     
     # delegate work to superclass method
     return super().form_valid(form)
+  
+class DeleteStatusMessageView(DeleteView):
+  ''' view for deleting status msg '''
+  model = StatusMessage
+  template_name = 'mini_fb/delete_status_form.html'
+
+  def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    # get context data from superclass
+    context = super().get_context_data(**kwargs)
+
+     # get the StatusMessage object based on its pk
+    status_message = self.get_object()
+
+    # access the related Profile 
+    profile = status_message.profile
+
+    # add status
+    context['status'] = status_message
+    # add profile 
+    context['profile'] = profile 
+    return context
+  
+  def get_success_url(self) -> str:
+    ''' return the url to redirect to on success '''
+    # get the StatusMessage object based on its pk
+    status_message = self.get_object()
+
+    # get profile
+    profile = status_message.profile
+  
+    return reverse('show_profile', kwargs={'pk':profile.pk})
+  
+class UpdateStatusMessageView(UpdateView):
+  ''' view for updating status msg '''
+  model = StatusMessage
+  form_class = UpdateStatusMessageForm
+  template_name = 'mini_fb/update_status_form.html'
+
+  def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    # get context data from superclass
+    context = super().get_context_data(**kwargs)
+
+     # get the StatusMessage object based on its pk
+    status_message = self.get_object()
+
+    # access the related Profile 
+    profile = status_message.profile
+
+    # add status
+    context['status'] = status_message
+    # add profile 
+    context['profile'] = profile 
+    return context
+  
+  def get_success_url(self) -> str:
+    ''' return the url to redirect to on success '''
+    # get the StatusMessage object based on its pk
+    status_message = self.get_object()
+
+    # get profile
+    profile = status_message.profile
+  
+    return reverse('show_profile', kwargs={'pk':profile.pk})

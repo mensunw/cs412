@@ -1,0 +1,31 @@
+<!-- mini_fb/templates/mini_fb/update_status_form.html -->
+
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+
+<h2> Update Status Message </h2>
+
+<!-- display update form -->
+<form method="POST">
+  {% csrf_token %}
+  <table style="text-transform: capitalize; font-weight:bold">
+    {% for input in form %}
+    <tr>
+      <td>
+        {{input.label_tag}}
+      </td>
+      <td>
+        {{input}}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  <input type="submit" name="submit" value="Update Status">
+</form>
+<!-- create a form to cancel -->
+<form action="{% url 'show_profile' profile.pk %}">
+  <input type="submit" name="Cancel" value="Cancel">
+</form>
+
+{% endblock %}
