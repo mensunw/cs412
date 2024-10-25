@@ -30,6 +30,7 @@ class Profile(models.Model):
     friends1 = Friend.objects.filter(profile1=self)
     friends2 = Friend.objects.filter(profile2=self)
 
+    # return profile of friends
     all_friends = []
     for friend in friends1:
       all_friends += [friend.profile2]
@@ -37,6 +38,48 @@ class Profile(models.Model):
       all_friends += [friend.profile1]
 
     return all_friends
+  
+  def add_friend(self, other):
+    ''' allows a user to become friends with another user '''
+
+    # check if friend already exists
+    our_friends = self.get_friends()
+    
+    already_friends = False
+    for friend in our_friends:
+      if friend == other:
+        already_friends = True
+    
+    # check for "self friending"
+    if self == other:
+      already_friends = True
+
+    # create friend
+    if already_friends == False:
+      Friend.objects.create(profile1=self, profile2=other)
+  
+  def get_friend_suggestions(self):
+    ''' returns list of possible friends for the profile '''
+
+    # invalid friends (self, friends already with)
+    invalid_profiles = self.get_friends()
+    invalid_profiles += [self]
+
+    # get all possible friends
+    possible_profiles = []
+    all_profiles = Profile.objects.all()
+    for profile in all_profiles:
+      if not (profile in invalid_profiles):
+        possible_profiles += [profile]
+
+    # get 5 suggestions or until no more possible profiles
+    suggestions = []
+    numSuggestions = 0
+    while numSuggestions < 5 and numSuggestions < len(possible_profiles):
+      suggestions += [possible_profiles[numSuggestions]]
+      numSuggestions += 1
+    return suggestions
+
 
 class StatusMessage(models.Model):
   ''' Encapsulate idea of a statusmessage on a profile '''
@@ -75,4 +118,4 @@ class Friend(models.Model):
 
   def __str__(self):
     ''' Return a string representation of object '''
-    return f'{self.profile1.first_name} & {self.profile2.last_name}'
+    return f'{self.profile1.first_name} & {self.profile2.first_name}'

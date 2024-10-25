@@ -1,0 +1,39 @@
+<!-- mini_fb/templates/mini_fb/friend_suggestions.html -->
+
+{% extends 'mini_fb/base.html' %}
+<h1> Friend Suggestions </h1>
+
+{% block content %}
+
+<h1> Friend Suggestions For {{profile.first_name}} {{profile.last_name}}</h1>
+
+<!-- get each profile suggested -->
+<table>
+  <tr>
+    <th style="color:brown; text-align:center">
+      May Know:
+    </th>
+  </tr>
+  {% for p in profile.get_friend_suggestions %}
+  <tr>
+    <td style="color: rgb(44, 171, 128); text-align:center">
+      <a href="{% url 'create_friend' profile.pk p.pk %}">
+        <p style="color: rgb(44, 52, 171);"> Add Friend </p>
+      </a>
+      <img src="{{p.profile_image_url}}" alt="image url here">
+      <br>
+      {{p.first_name}} {{p.last_name}}
+    </td>
+  </tr>
+
+  {% endfor %}
+</table>
+
+<!-- button for cancelling -->
+<a href="{% url 'show_profile' profile.pk %}">
+  <button type="button" style="height:80px; width:240px; color:rgb(163, 87, 28); margin:30px; border-radius:12px">
+    Cancel
+  </button>
+</a>
+
+{% endblock %}

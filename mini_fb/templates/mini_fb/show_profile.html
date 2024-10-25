@@ -106,6 +106,12 @@
     {% endfor %}
   </table>
 
+  <!-- button for finding suggested friends -->
+  <a href="{% url 'suggest_friends' profile.pk %}">
+    <button type="button" style="height:80px; width:240px; color:rgb(163, 87, 28); margin:30px; border-radius:12px">
+      Find Friend Suggestions
+    </button>
+  </a>
 
 
 </main>
