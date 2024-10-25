@@ -85,6 +85,28 @@
   </table>
 
 
+  <!-- show friends -->
+
+  <table>
+    <tr>
+      <th style="color: brown; text-align:center"> {{profile.first_name}} {{profile.last_name}}'s Friends
+      </th>
+    </tr>
+
+    {% for f_profile in profile.get_friends %}
+    <tr>
+      <td style="text-align:center">
+        <a href="{% url 'show_profile' f_profile.pk %}">
+          <img src="{{f_profile.profile_image_url}}" alt="f_profile.first_name pic supposed to be here ._?"> </a>
+        <a href="{% url 'show_profile' f_profile.pk %}">
+          <h4> {{f_profile.first_name}} {{f_profile.last_name}}</h2>
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+
 
 </main>
 

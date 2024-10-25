@@ -20,10 +20,23 @@ class Profile(models.Model):
   
   def get_status_messages(self):
     ''' return a queryset of all status messages for this profile '''
-
     # use ORM to retrieve comments for which the FK is this profile
     messages = StatusMessage.objects.filter(profile=self)
     return messages
+
+  def get_friends(self):
+    ''' returns a profile's friends '''
+    # use ORM to retrieve friends for which the FK is this profile
+    friends1 = Friend.objects.filter(profile1=self)
+    friends2 = Friend.objects.filter(profile2=self)
+
+    all_friends = []
+    for friend in friends1:
+      all_friends += [friend.profile2]
+    for friend in friends2:
+      all_friends += [friend.profile1]
+
+    return all_friends
 
 class StatusMessage(models.Model):
   ''' Encapsulate idea of a statusmessage on a profile '''
@@ -52,4 +65,14 @@ class Image(models.Model):
   image_file = models.ImageField(blank=False)
   published = models.DateTimeField(auto_now=True)
   
+class Friend(models.Model):
+  ''' Encapsulate idea of friends '''
 
+  # 1 to 1 relationship with Profiles
+  profile1 = models.ForeignKey("Profile", on_delete=models.CASCADE, related_name="profile1")
+  profile2 = models.ForeignKey("Profile", on_delete=models.CASCADE, related_name="profile2")
+  timestamp = models.DateTimeField(auto_now=True)
+
+  def __str__(self):
+    ''' Return a string representation of object '''
+    return f'{self.profile1.first_name} & {self.profile2.last_name}'
