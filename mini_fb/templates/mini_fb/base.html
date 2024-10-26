@@ -19,10 +19,11 @@
     <ul>
       <li><a href="{% url 'show_all_profiles' %}">Show All Profiles</a></li>
       <li><a href="{% url 'create_profile' %}">Create a Profile</a></li>
+
+
+      {% block content %}
     </ul>
   </nav>
-
-  {% block content %}
   <!-- fill in this section with specific page detail -->
   {% endblock %}
 

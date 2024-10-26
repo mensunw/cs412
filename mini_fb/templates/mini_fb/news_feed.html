@@ -1,0 +1,43 @@
+<!-- mini_fb/templates/mini_fb/news_feed.html -->
+
+{% extends 'mini_fb/base.html' %}
+
+<h1> News Feed </h1>
+
+{% block content %}
+<li><a href="{% url 'show_profile' profile.pk %}">Profile Page</a></li>
+<li><a href="{% url 'show_feed' profile.pk %}">News Feed</a></li>
+</ul>
+</nav>
+
+<h1> {{profile.first_name}} {{profile.last_name}}'s News Feed</h1>
+
+<!-- display news feed -->
+<table>
+  {% for status in profile.get_news_feed %}
+  <tr>
+    <td>
+      <h4 style="color:rgb(163, 87, 28); display:inline">{{status.profile.first_name}} {{status.profile.last_name}}
+        </h1>
+        <p style="display:inline; font-size:10px">{{status.published}}</p>
+        <br>
+        <img src="{{status.profile.profile_image_url}}" alt="profile img here" style="border-radius:50%">
+
+        <!-- display every status image related to the msg -->
+        <br>
+        <p style="color: rgb(44, 171, 128)">
+          {{status.message}}
+        </p>
+        {% for image in status.get_images %}
+        <img src="{{image.image_file.url}}" alt="img supposed to be here" style="height:400px; width:400px">
+        <br>
+        {% endfor %}
+
+
+
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

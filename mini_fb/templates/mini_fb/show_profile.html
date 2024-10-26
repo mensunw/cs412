@@ -5,7 +5,11 @@
 
 
 {% block content %}
-
+<!-- add to navbar profile page & news feed-->
+<li><a href="{% url 'show_profile' profile.pk %}">Profile Page</a></li>
+<li><a href="{% url 'show_feed' profile.pk %}">News Feed</a></li>
+</ul>
+</nav>
 <!-- display a context variable called profiles -->
 <main class="grid-container">
   <!-- Show a profile -->

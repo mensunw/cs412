@@ -58,6 +58,24 @@ class Profile(models.Model):
     if already_friends == False:
       Friend.objects.create(profile1=self, profile2=other)
   
+  def get_news_feed(self):
+    ''' returns list of all statusmsgs for all friends for the profile, and orders them based on timestamp '''
+    # get all friend of profile, then iterate through each one to get every status
+    all_friends = self.get_friends()
+    all_status = []
+    for friend in all_friends:
+      for status in friend.get_status_messages():
+        all_status += [status]
+
+    # add own status too (based on demo)
+    for status in self.get_status_messages():
+      all_status += [status]
+
+    # sort based on timestamp
+    ordered_all_status = sorted(all_status, key=lambda status:status.published, reverse=True)
+
+    return ordered_all_status
+
   def get_friend_suggestions(self):
     ''' returns list of possible friends for the profile '''
 
