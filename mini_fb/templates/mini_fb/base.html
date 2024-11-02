@@ -20,10 +20,10 @@
     <ul>
       <!-- URLS that don't depend on authenticated user -->
       <li><a href="{% url 'show_all_profiles' %}">Show All Profiles</a></li>
-
+      <li><a href="{% url 'create_profile' %}">Create a Profile</a></li>
       <!-- Requires logged in user -->
       {% if request.user.is_authenticated %}
-      <li><a href="{% url 'create_profile' %}">Create a Profile</a></li>
+
       <li> Logged in as: {{ request.user }}.</li>
 
       <form action="{% url 'logout' %}" method="POST">

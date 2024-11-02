@@ -36,7 +36,18 @@ class CreateProfileView(CreateView):
   '''
   form_class = CreateProfileForm
   template_name = 'mini_fb/create_profile_form.html'
+  
+  def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+      # Get the initial context from the superclass
+      context = super().get_context_data(**kwargs)
 
+      # Add the UserCreationForm to context
+      context['user_creation_form'] = UserCreationForm()
+
+      # Return the context dictionary
+      return context
+  
+  
   def get_success_url(self):
     ''' return the url to redirect to on success '''
     # find the profile identified by the PK from the URL pattern
@@ -45,8 +56,13 @@ class CreateProfileView(CreateView):
   
   def form_valid(self, form):
     ''' this method is called after form is validated, before saving data to database '''
-    print(f'CreateProfileView.form_valid() form={form.cleaned_data}')
-    print(f'CreateProfileView.form_valid(): self.kwargs={self.kwargs}')
+
+    # reconstruct post data
+    user_creation_form = UserCreationForm(self.request.POST)
+    # save user
+    user = user_creation_form.save()
+    # attach user to this form instance
+    form.instance.user = user
     
     # delegate work to superclass method
     return super().form_valid(form)
@@ -113,13 +129,13 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
   def get_success_url(self) -> str:
     ''' return the url to redirect to on success '''
     # find the profile identified by the PK from the URL pattern
-    profile = Profile.objects.get(pk=self.kwargs['pk'])
+    profile = Profile.objects.get(user=self.request.user)
     return reverse('show_profile', kwargs={'pk':profile.pk})
   
   def form_valid(self, form):
     ''' this method is called after form is validated, before saving data to database '''
 
-    profile = Profile.objects.get(pk=self.kwargs['pk'])
+    profile = Profile.objects.get(user=self.request.user)
 
     # attach this profile to the instance of the status message to set its FK
     form.instance.profile = profile
@@ -230,31 +246,3 @@ class ShowNewsFeedView(DetailView):
   def get_object(self):
     # Retrieve and return the profile for the logged-in user
     return Profile.objects.get(user=self.request.user)
-
-class RegistrationView(CreateView):
-  ''' handle registration of new users '''
-  template_name = "mini_fb/register.html"
-  form_class = UserCreationForm
-
-  def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-    if self.request.POST:
-      # we handle POST
-      print(f"RegistrationView.dispath: {self.request.POST}")
-
-      # reconstruct UserCreateForm from the POst data
-      form = UserCreationForm(self.request.POST)
-
-      if not form.is_valid:
-        # re-display form with errors
-        return super().dispatch(request, *args, **kwargs)        
-
-      # sae the form, which creates new 
-      user = form.save()
-
-      # log User in
-      login(self.request, user)
-
-      # attach FK use rto profile form instance
-
-    # relax, let CreateView.dispatch handle it!
-    return super().dispatch(request, *args, **kwargs)
