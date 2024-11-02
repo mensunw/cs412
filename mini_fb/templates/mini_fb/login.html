@@ -1,0 +1,14 @@
+<!-- mini_fb/templates/mini_fb/login.html -->
+{% extends 'blog/base.html' %}
+{% block content %}
+<!-- This basic authentication form works.
+- need to set "next" to redirect to correct page.
+-->
+<h1>Login</h1>
+<form method="POST" action="{% url 'login' %}">
+  {% csrf_token %}
+  {{form}}
+  <input type="hidden" name="next" value="{% url 'show_all' %}">
+  <input type="submit" value="{% url 'show_all' %}">
+</form>
+{% endblock %}

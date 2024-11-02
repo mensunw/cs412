@@ -6,8 +6,10 @@
 
 {% block content %}
 <!-- add to navbar profile page & news feed-->
+{% if request.user == profile.user %}
 <li><a href="{% url 'show_profile' profile.pk %}">Profile Page</a></li>
 <li><a href="{% url 'show_feed' profile.pk %}">News Feed</a></li>
+{% endif %}
 </ul>
 </nav>
 <!-- display a context variable called profiles -->
@@ -24,7 +26,10 @@
 
       <h3>{{profile.city}}</h3>
 
+      <!-- only allow CRUD if user is the owner of this profile -->
+
       <!-- update profile -->
+      {% if request.user == profile.user %}
       <a href="{% url 'update_profile' profile.pk %}">
         <button type="button" style="height:50px; width:120px; color:rgb(163, 87, 28); margin:30px; border-radius:12px">
           Update
@@ -37,6 +42,7 @@
           Create
           Status</button>
       </a>
+      {% endif %}
       <br>
 
       <img src="{{profile.profile_image_url}}" alt="profile pic was supposed to be here" style="height:500; width:500">
@@ -53,12 +59,15 @@
       <th style="color:brown; text-align:center">
         Status Messages
       </th>
+      {% if request.user == profile.user %}
       <th style="color:brown; text-align:center">
         Update Status Messages
       </th>
+
       <th style="color:brown; text-align:center">
         Delete Status Messages
       </th>
+      {% endif %}
 
     </tr>
     {% for status in profile.get_status_messages %}
@@ -77,12 +86,14 @@
 
           {% endfor %}
         </td>
+        {% if request.user == profile.user %}
         <td style="color: rgb(44, 171, 128); text-align:center">
           <a href="{% url 'update_status' status.pk %}"> update </a>
         </td>
         <td style="color: rgb(44, 171, 128); text-align:center">
           <a href="{% url 'delete_status' status.pk %}"> delete </a>
         </td>
+        {% endif %}
       </tr>
     </div>
     {% endfor %}
@@ -110,12 +121,15 @@
     {% endfor %}
   </table>
 
+
   <!-- button for finding suggested friends -->
+  {% if request.user == profile.user %}
   <a href="{% url 'suggest_friends' profile.pk %}">
     <button type="button" style="height:80px; width:240px; color:rgb(163, 87, 28); margin:30px; border-radius:12px">
       Find Friend Suggestions
     </button>
   </a>
+  {% endif %}
 
 
 </main>

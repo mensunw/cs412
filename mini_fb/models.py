@@ -1,6 +1,8 @@
 # mini_fb/models.py
 # Define data objects for blog application
 from django.db import models
+from django.contrib.auth.models import User
+import random
 
 # Create your models here.
 
@@ -13,6 +15,10 @@ class Profile(models.Model):
   email_address = models.TextField(blank=False)
   profile_image_url = models.URLField(blank=True)
   #profile_image_url = models.ImageField(blank=True)
+
+  # every Profile has one User
+  user = models.ForeignKey(User, on_delete=models.CASCADE, default=User.objects.get(username="admin").id)
+
 
   def __str__(self):
     ''' Return a string representation of object '''

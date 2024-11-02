@@ -1,4 +1,6 @@
 # mini_fb/views.py
+from django.http import HttpRequest
+from django.http.response import HttpResponse as HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
@@ -6,6 +8,11 @@ from .models import * # import all models
 from .forms import * # import forms
 from typing import Any
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin
+import random
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.contrib.auth import login
 # Create your views here.
 
 
@@ -44,7 +51,7 @@ class CreateProfileView(CreateView):
     # delegate work to superclass method
     return super().form_valid(form)
   
-class CreateStatusMessageView(CreateView):
+class CreateStatusMessageView(LoginRequiredMixin, CreateView):
   ''' the view to create a status message
   on GET: send back form to display
   on POST: read/process form, save new profile to database 
@@ -94,7 +101,7 @@ class CreateStatusMessageView(CreateView):
     # delegate work to superclass method
     return super().form_valid(form)
   
-class UpdateProfileView(UpdateView):
+class UpdateProfileView(LoginRequiredMixin, UpdateView):
   ''' view to update profile '''
   form_class = UpdateProfileForm
   template_name = 'mini_fb/update_profile_form.html'
@@ -123,7 +130,7 @@ class UpdateProfileView(UpdateView):
     # delegate work to superclass method
     return super().form_valid(form)
   
-class DeleteStatusMessageView(DeleteView):
+class DeleteStatusMessageView(LoginRequiredMixin, DeleteView):
   ''' view for deleting status msg '''
   model = StatusMessage
   template_name = 'mini_fb/delete_status_form.html'
@@ -154,7 +161,7 @@ class DeleteStatusMessageView(DeleteView):
   
     return reverse('show_profile', kwargs={'pk':profile.pk})
   
-class UpdateStatusMessageView(UpdateView):
+class UpdateStatusMessageView(LoginRequiredMixin, UpdateView):
   ''' view for updating status msg '''
   model = StatusMessage
   form_class = UpdateStatusMessageForm
@@ -186,7 +193,7 @@ class UpdateStatusMessageView(UpdateView):
   
     return reverse('show_profile', kwargs={'pk':profile.pk})
 
-class CreateFriendView(View):
+class CreateFriendView(LoginRequiredMixin, View):
   ''' view for creating friends '''
 
   def dispatch(self, request, *args, **kwargs):
@@ -215,3 +222,31 @@ class ShowNewsFeedView(DetailView):
   model = Profile
   template_name = 'mini_fb/news_feed.html'
   context_object_name = 'profile'
+
+class RegistrationView(CreateView):
+  ''' handle registration of new users '''
+  template_name = "mini_fb/register.html"
+  form_class = UserCreationForm
+
+  def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+    if self.request.POST:
+      # we handle POST
+      print(f"RegistrationView.dispath: {self.request.POST}")
+
+      # reconstruct UserCreateForm from the POst data
+      form = UserCreationForm(self.request.POST)
+
+      if not form.is_valid:
+        # re-display form with errors
+        return super().dispatch(request, *args, **kwargs)        
+
+      # sae the form, which creates new 
+      user = form.save()
+
+      # log User in
+      login(self.request, user)
+
+      # attach FK use rto profile form instance
+
+    # relax, let CreateView.dispatch handle it!
+    return super().dispatch(request, *args, **kwargs)

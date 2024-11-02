@@ -3,6 +3,7 @@
 
 from django.urls import path
 from django.conf import settings
+from django.contrib.auth import views as auth_views
 from . import views
 
 # define a list of valid URL patterns
@@ -17,4 +18,9 @@ urlpatterns = [
   path('profile/<int:pk>/add_friend/<int:other_pk>', views.CreateFriendView.as_view(), name="create_friend"),
   path('profile/<int:pk>/friend_suggestions', views.ShowFriendSuggestionsView.as_view(), name="suggest_friends"),
   path('profile/<int:pk>/news_feed', views.ShowNewsFeedView.as_view(), name="show_feed"),
+
+  # authenticate urls
+  path('login/', auth_views.LoginView.as_view(template_name='mini_fb/login.html'), name='login'),
+  path('logout/', auth_views.LogoutView.as_view(next_page='show_all'), name="logout"),
+  path('register/', views.RegistrationView.as_view(), name="register"),
 ]
