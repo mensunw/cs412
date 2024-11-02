@@ -25,6 +25,12 @@
       {% if request.user.is_authenticated %}
       <li><a href="{% url 'create_profile' %}">Create a Profile</a></li>
       <li> Logged in as: {{ request.user }}.</li>
+
+      <form action="{% url 'logout' %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Logout">
+      </form>
+
       {% else %}
       <li><a href="{% url 'login' %}">Login</a></li>
       {% endif %}

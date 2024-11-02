@@ -8,7 +8,7 @@
 <!-- add to navbar profile page & news feed-->
 {% if request.user == profile.user %}
 <li><a href="{% url 'show_profile' profile.pk %}">Profile Page</a></li>
-<li><a href="{% url 'show_feed' profile.pk %}">News Feed</a></li>
+<li><a href="{% url 'show_feed' %}">News Feed</a></li>
 {% endif %}
 </ul>
 </nav>
@@ -30,14 +30,14 @@
 
       <!-- update profile -->
       {% if request.user == profile.user %}
-      <a href="{% url 'update_profile' profile.pk %}">
+      <a href="{% url 'update_profile' %}">
         <button type="button" style="height:50px; width:120px; color:rgb(163, 87, 28); margin:30px; border-radius:12px">
           Update
           Profile</button>
       </a>
 
       <!-- add status message  -->
-      <a href="{% url 'create_status' profile.pk %}">
+      <a href="{% url 'create_status' %}">
         <button type="button" style="height:50px; width:120px; color:rgb(163, 87, 28); margin:30px; border-radius:12px">
           Create
           Status</button>
@@ -124,7 +124,7 @@
 
   <!-- button for finding suggested friends -->
   {% if request.user == profile.user %}
-  <a href="{% url 'suggest_friends' profile.pk %}">
+  <a href="{% url 'suggest_friends' %}">
     <button type="button" style="height:80px; width:240px; color:rgb(163, 87, 28); margin:30px; border-radius:12px">
       Find Friend Suggestions
     </button>

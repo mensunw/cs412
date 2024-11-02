@@ -1,0 +1,19 @@
+<!-- mini_fb/templates/mini_fb/logged_out.html -->
+{% extends 'mini_fb/base.html' %}
+{% block content %}
+</ul>
+</nav>
+<!-- This basic authentication form works.
+- need to set "next" to redirect to correct page.
+-->
+
+<h1> Successfully logged out</h3>
+
+  <br>
+  <br>
+  <br>
+
+  <a href="{% url 'login' %}">Login</a>
+
+
+  {% endblock %}
