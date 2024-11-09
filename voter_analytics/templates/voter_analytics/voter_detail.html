@@ -1,0 +1,50 @@
+<!-- templates/voter_analytics/voter_detail.html -->
+{% extends 'voter_analytics/base.html' %}
+{% block content %}
+<div class="container">
+
+  <h1>{{v.first_name}} {{v.last_name}}</h1>
+  <div class="row">
+    <table>
+      <tr>
+        <th>Street Adress</th>
+        <th>Date of Birth</th>
+        <th>Party Affiliation</th>
+        <th>Voter Score</th>
+        <th>v20state Election</th>
+        <th>v21town Election</th>
+        <th>v20primary Election</th>
+        <th>v22general Election</th>
+        <th>v23town Election</th>
+        <th>Precinct</th>
+        <th>Google Maps View</th>
+      </tr>
+
+
+      <tr>
+
+        <td><a href="https://www.google.com/maps/search/?api=1&query={{ v.address_st_num }}+{{ v.address_name }}+{{
+          v.address_zip }}" target="_blank">{{v.address_st_num}} {{v.address_name}}, {{v.address_zip}}
+            {% if v.address_apt_num %}, Apt
+            {{v.address_apt_num}}{% endif %}</td>
+        <td>{{v.dob}}</td>
+        <td>{{v.party}}</td>
+        <td>{{v.voter_score}}</td>
+        <td>{{v.v20state}}</td>
+        <td>{{v.v21town}}</td>
+        <td>{{v.v20primary}}</td>
+        <td>{{v.v22general}}</td>
+        <td>{{v.v23town}}</td>
+        <td>{{v.precinct_num}}</td>
+        <td><a href="https://www.google.com/maps/search/?api=1&query={{ v.address_st_num }}+{{ v.address_name }}+{{
+          v.address_zip }}" target="_blank">
+            View address on Google Maps
+          </a>
+        </td>
+
+      </tr>
+
+
+    </table>
+  </div>
+  {% endblock %}

@@ -1,0 +1,70 @@
+<!-- templates/voter_analytics/results.html -->
+{% extends 'voter_analytics/base.html' %}
+{% block content %}
+<div class="container">
+
+  <div class="row">
+    <div>
+      {% include 'voter_analytics/search.html' %}
+    </div>
+  </div>
+
+  <h1>Results</h1>
+  <div class="row">
+    <table>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Street Adress</th>
+        <th>Date of Birth</th>
+        <th>Party Affiliation</th>
+        <th>Voter Score</th>
+        <th>Link to Voter</th>
+      </tr>
+
+      {% for r in voters %}
+      <tr>
+
+        <td>{{r.first_name}}</td>
+        <td>{{r.last_name}}</td>
+        <td>{{r.address_st_num}} {{r.address_name}}, {{r.address_zip}}{% if r.address_apt_num %}, Apt
+          {{r.address_apt_num}}{% endif %}</td>
+        <td>{{r.dob}}</td>
+        <td>{{r.party}}</td>
+        <td>{{r.voter_score}}</td>
+        <td><a href="{% url 'voter' r.pk %}"> Voter Info </a></td>
+
+      </tr>
+      {% endfor %}
+
+    </table>
+  </div>
+
+  <!-- navigation for different pages of results -->
+  <div class="row">
+    {% if is_paginated %}
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+      <!-- retain get parameters -->
+      <button>
+        <span><a
+            href="?page={{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Previous</a></span>
+      </button>
+
+      {% endif %}
+
+      <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</span>
+
+      {% if page_obj.has_next %}
+      <button>
+        <span><a
+            href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Next</a></span>
+      </button>
+      {% endif %}
+    </ul>
+    {% endif %}
+  </div>
+
+</div>
+
+{% endblock %}

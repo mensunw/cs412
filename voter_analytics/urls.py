@@ -7,4 +7,5 @@ from . import views
 # define a list of valid URL patterns
 urlpatterns = [
   path(r'', views.VotersListView.as_view(), name="voters"), 
+  path(r'voter/<int:pk>', views.VoterDetailView.as_view(), name="voter"),
 ]

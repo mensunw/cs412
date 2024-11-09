@@ -25,7 +25,7 @@ urlpatterns = [
     path("quotes/", include("quotes.urls")), # create URL quotes/, and associate it with URLS in quotes.urls  
     path("restaurant/", include("restaurant.urls")), # create URL restaurant/ and associate it with URLS in restaurant.urls    
     path("mini_fb/", include("mini_fb.urls")),                 
-                                    
+    path("voter_analytics/", include("voter_analytics.urls")),
 ] 
 
 urlpatterns += static(settings.STATIC_URL,
