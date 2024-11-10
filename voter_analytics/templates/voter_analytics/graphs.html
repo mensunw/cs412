@@ -1,0 +1,27 @@
+<!-- templates/voter_analytics/graphs.html -->
+{% extends 'voter_analytics/base.html' %}
+{% block content %}
+
+<!-- filter -->
+<div class="row">
+  <div>
+    {% include 'voter_analytics/graph_search.html' %}
+  </div>
+</div>
+
+<!-- display the bar chart for voter counts -->
+<div class="row">
+  {{bar_div|safe}}
+</div>
+
+<!-- display pie chart for parties -->
+<div class="row">
+  {{pie_div|safe}}
+</div>
+
+<!-- display histogram for election counts -->
+<div class="row">
+  {{bar2_div|safe}}
+</div>
+
+{% endblock %}
