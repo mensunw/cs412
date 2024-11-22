@@ -1,0 +1,29 @@
+<!-- project/templates/project/create_prediction_form.html -->
+
+<h3>Prediction form</h3>
+
+<form action="{% url 'show_all_predictions' %}">
+  <table>
+    <!-- game name -->
+    <tr>
+      <td style="font-weight:bold">Enter user info</td>
+      <td>
+        <label for="game_name">Game name:</label>
+        <input type="text" id="game_name">
+      </td>
+
+      <td>
+        <label for="tag_line">Tag line:</label>
+        <input type="text" id="tag_line">
+      </td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td></td>
+      <td>
+        <input type="submit">
+      </td>
+    </tr>
+  </table>
+</form>

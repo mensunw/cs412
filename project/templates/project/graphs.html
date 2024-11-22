@@ -1,0 +1,36 @@
+<!-- project/templates/project/graphs.html -->
+
+
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<h1> display kewl data visualization graphs here </h1>
+
+<p> for now display first 10 game records</p>
+
+<table>
+  <tr>
+    <th>
+      Match ID
+    </th>
+    <th>
+      Gold Ratio
+    </th>
+    <th>
+      Outcome
+    </th>
+  </tr>
+  {% for game in games|slice:":10" %}
+  <tr>
+    <td>{{game.match_id}}</td>
+    <td>{{game.gold_ratio}}</td>
+    <td>{{game.win}}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+
+
+
+{% endblock %}

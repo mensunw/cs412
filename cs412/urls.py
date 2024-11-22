@@ -26,6 +26,7 @@ urlpatterns = [
     path("restaurant/", include("restaurant.urls")), # create URL restaurant/ and associate it with URLS in restaurant.urls    
     path("mini_fb/", include("mini_fb.urls")),                 
     path("voter_analytics/", include("voter_analytics.urls")),
+    path("project/", include("project.urls")),
 ] 
 
 urlpatterns += static(settings.STATIC_URL,

@@ -1,0 +1,24 @@
+<!-- project/templates/project/create_feedback_form.html -->
+
+<h3>Feedback form</h3>
+
+<form action="{% url 'feedbacks' %}">
+  <table>
+    <!-- feedback msg -->
+    <tr>
+      <td style="font-weight:bold">Enter Feedback</td>
+      <td>
+        <label for="game_name">Message:</label>
+        <input type="text" id="feedback_message">
+      </td>
+
+    </tr>
+
+    <tr>
+      <td></td>
+      <td>
+        <input type="submit">
+      </td>
+    </tr>
+  </table>
+</form>
