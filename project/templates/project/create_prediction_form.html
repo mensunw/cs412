@@ -1,20 +1,21 @@
 <!-- project/templates/project/create_prediction_form.html -->
 
-<h3>Prediction form</h3>
+<h3>Make a prediction</h3>
 
-<form action="{% url 'show_all_predictions' %}">
+<form action="{% url 'show_prediction' request.user.pprofile.pk %}" method="POST">
+  {% csrf_token %}
   <table>
     <!-- game name -->
     <tr>
       <td style="font-weight:bold">Enter user info</td>
       <td>
         <label for="game_name">Game name:</label>
-        <input type="text" id="game_name">
+        <input type="text" id="game_name" name="game_name">
       </td>
 
       <td>
         <label for="tag_line">Tag line:</label>
-        <input type="text" id="tag_line">
+        <input type="text" id="tag_line" name="tag_line">
       </td>
     </tr>
 
@@ -22,7 +23,7 @@
       <td></td>
       <td></td>
       <td>
-        <input type="submit">
+        <input type="submit" value="Predict!">
       </td>
     </tr>
   </table>

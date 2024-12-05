@@ -6,11 +6,95 @@
 <!-- Set CSS for all templates -->
 
 <head>
-  <title>Our Mini Facebook</title>
-
+  <title>FF Detector</title>
+  <!--
   <link rel="stylesheet" href="{% static 'styles-blog.css' %}">
+  -->
   <link rel="stylesheet" href="{% static 'styles-footer.css' %}">
   <link rel="stylesheet" href="{% static 'styles-header.css' %}">
+
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #1b1b2f;
+      color: #ececec;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1,
+    h2 {
+      text-align: center;
+      color: #e43f5a;
+    }
+
+    h1 {
+      font-size: 2.8em;
+      margin-top: 20px;
+    }
+
+    h2 {
+      font-size: 1.8em;
+      margin-bottom: 10px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .story,
+    .model-details,
+    .data-details {
+      margin: 30px 0;
+      padding: 20px;
+      background-color: #162447;
+      border: 1px solid #e43f5a;
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    p {
+      font-size: 1.2em;
+      line-height: 1.8em;
+      text-align: justify;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    td {
+      padding: 10px;
+      vertical-align: top;
+      border-bottom: 1px solid #e43f5a;
+    }
+
+    td:first-child {
+      width: 70%;
+      font-size: 1.5em;
+      color: #a1eafb;
+    }
+
+    td:last-child {
+      font-size: 1em;
+      color: #e3e3e3;
+      text-align: left;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 5px;
+      border: 1px solid #e43f5a;
+    }
+
+    .highlight {
+      font-style: italic;
+      color: #f0a500;
+    }
+  </style>
 </head>
 
 <!-- Set this header for all templates -->
@@ -24,7 +108,7 @@
 
       <!-- Requires logged in user -->
       {% if request.user.is_authenticated %}
-      <li><a href="{% url 'show_all_predictions' %}">Predict Game</a></li>
+      <li><a href="{% url 'show_prediction' request.user.pprofile.pk %}">Predict Game</a></li>
       <li><a href="{% url 'feedbacks' %}">Feedback Center</a></li>
       <li><a href="{% url 'about' %}">About Me</a></li>
       <li> Logged in as: {{ request.user }}.</li>
@@ -53,10 +137,6 @@
   <!-- footer -->
   <footer>
     <div class="footer-container">
-      <div class="footer-left">
-        <h4>About Me</h4>
-        <p>These are for my CS412 assignments. If you're not a grader, not sure what u doin here ._.</p>
-      </div>
       <div class="footer-right">
         <h4>Follow Me</h4>
         <!-- only for display reasons, not putting actual links! -->
@@ -66,7 +146,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2024 Mensun CS412 Webpage. All rights unreserved.</p>
+      <p>&copy; 2024 Mensun Wang Webpage. All rights reserved.</p>
     </div>
   </footer>
 

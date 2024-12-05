@@ -1,0 +1,68 @@
+<!-- project/templates/project/predict.html -->
+
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<h1> this will look better & only show the predictions for the authenticated user later </h1>
+<p> todo: make custom url for each user </p>
+
+<div class="row">
+  <div>
+    {% include 'project/create_prediction_form.html' %}
+  </div>
+</div>
+
+<table style="width: 100%; border-collapse: collapse;">
+  <thead>
+    <tr>
+      <th>Profile Picture</th>
+      <th>Name</th>
+      <th>Game Name</th>
+      <th>Rank</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in profiles %}
+    <tr>
+      <td>
+        {% if p.profile_image %}
+        <img src="{{ p.profile_image.url }}" alt="Profile Picture" style="max-width: 100px; height: auto;">
+        {% else %}
+        No Image
+        {% endif %}
+      </td>
+      <td>{{ p.first_name }} {{ p.last_name }}</td>
+      <td>{{ p.game_name }}#{{ p.tag_line }}</td>
+      <td>{{ p.rank }}</td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr>
+              <th>Match ID</th>
+              <th>Prediction</th>
+              <th>Actual Outcome</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for prediction in p.get_predictions %}
+            <tr>
+              <td style="text-align: center;">{{ prediction.match_id }}</td>
+              <td style="text-align: center;">{{ prediction.outcome }}</td>
+              <td style="text-align: center;">
+                {{ prediction.correct }}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+{% endblock %}

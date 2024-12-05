@@ -9,7 +9,11 @@ from . import views
 # define a list of valid URL patterns
 urlpatterns = [
   path('', views.home, name="home"), 
+  # testing url
   path('predict/', views.ShowAllPredictionsView.as_view(), name="show_all_predictions"),
+  # enforces a logged-in user
+  path('predict/<int:pk>', views.ShowPredictionView.as_view(), name="show_prediction"),
+  
   path('feedback/', views.ShowAllFeedbacksView.as_view(), name="feedbacks"),
   path("about", views.about, name="about"),
   path('graphs', views.GraphListView.as_view(), name="graphs"),

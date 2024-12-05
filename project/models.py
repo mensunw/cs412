@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
   ''' Encapsulate the idea of a profile '''
   # every Profile has one User
-  user = models.ForeignKey(User, on_delete=models.CASCADE, default=User.objects.get(username="admin").id, related_name="project_profiles")
+  user = models.OneToOneField(User, on_delete=models.CASCADE, default=User.objects.get(username="admin").id, related_name="pprofile")
   first_name = models.TextField(blank=False)
   last_name = models.TextField(blank=False)
   game_name = models.TextField(blank=False)

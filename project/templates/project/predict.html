@@ -4,65 +4,57 @@
 
 {% block content %}
 
-<h1> this will look better & only show the predictions for the authenticated user later </h1>
-<p> todo: make custom url for each user </p>
+<h1> this will look better </h1>
 
 <div class="row">
+  {% if form_state == "unsubmitted" %}
   <div>
     {% include 'project/create_prediction_form.html' %}
   </div>
+  {% endif %}
 </div>
 
+<div class="row">
+  {% if form_state == "submitted_failure" %}
+  <div>
+    {% include 'project/create_prediction_form.html' %}
+  </div>
+  <p> Prediction request failed. please ensure a valid game name and tag line that is currently in a game equal to or
+    greater than 15mins </p>
+  {% endif %}
+</div>
+
+<div class="row">
+  {% if form_state == "submitted_success" %}
+  <div>
+    <h3> Prediction Submitted!, here are the prediction results: [grab from context] </h3>
+    <a href="{% url 'show_prediction' request.user.pprofile.pk %}">make another prediction</a>
+  </div>
+  {% endif %}
+</div>
+
+<h2> prediction history </h2>
 <table style="width: 100%; border-collapse: collapse;">
   <thead>
     <tr>
-      <th>Profile Picture</th>
-      <th>Name</th>
-      <th>Game Name</th>
-      <th>Rank</th>
+      <th>Match ID</th>
+      <th>Prediction</th>
+      <th>Actual Outcome</th>
     </tr>
   </thead>
   <tbody>
-    {% for p in profiles %}
+    {% for prediction in profile.get_predictions %}
     <tr>
-      <td>
-        {% if p.profile_image %}
-        <img src="{{ p.profile_image.url }}" alt="Profile Picture" style="max-width: 100px; height: auto;">
-        {% else %}
-        No Image
-        {% endif %}
-      </td>
-      <td>{{ p.first_name }} {{ p.last_name }}</td>
-      <td>{{ p.game_name }}#{{ p.tag_line }}</td>
-      <td>{{ p.rank }}</td>
-    </tr>
-    <tr>
-      <td colspan="4">
-        <table style="width: 100%; border-collapse: collapse;">
-          <thead>
-            <tr>
-              <th>Match ID</th>
-              <th>Prediction</th>
-              <th>Actual Outcome</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for prediction in p.get_predictions %}
-            <tr>
-              <td style="text-align: center;">{{ prediction.match_id }}</td>
-              <td style="text-align: center;">{{ prediction.outcome }}</td>
-              <td style="text-align: center;">
-                {{ prediction.correct }}
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+      <td style="text-align: center;">{{ prediction.match_id }}</td>
+      <td style="text-align: center;">{{ prediction.outcome }}</td>
+      <td style="text-align: center;">
+        {{ prediction.correct }}
       </td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
+
 
 
 {% endblock %}
