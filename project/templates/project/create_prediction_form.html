@@ -1,30 +1,19 @@
 <!-- project/templates/project/create_prediction_form.html -->
 
-<h3>Make a prediction</h3>
-
-<form action="{% url 'show_prediction' request.user.pprofile.pk %}" method="POST">
+<form action="{% url 'show_prediction' request.user.pprofile.pk %}" method="POST" class="sorting-form">
   {% csrf_token %}
-  <table>
-    <!-- game name -->
-    <tr>
-      <td style="font-weight:bold">Enter user info</td>
-      <td>
-        <label for="game_name">Game name:</label>
+  <fieldset>
+    <legend>Make a Prediction</legend>
+    <div class="form-options">
+      <label for="game_name">
+        <span>Game Name:</span>
         <input type="text" id="game_name" name="game_name">
-      </td>
-
-      <td>
-        <label for="tag_line">Tag line:</label>
+      </label>
+      <label for="tag_line">
+        <span>Tag Line:</span>
         <input type="text" id="tag_line" name="tag_line">
-      </td>
-    </tr>
-
-    <tr>
-      <td></td>
-      <td></td>
-      <td>
-        <input type="submit" value="Predict!">
-      </td>
-    </tr>
-  </table>
+      </label>
+    </div>
+    <button type="submit" class="btn-submit">Predict!</button>
+  </fieldset>
 </form>

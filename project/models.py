@@ -29,6 +29,7 @@ class Feedback(models.Model):
   profile = models.ForeignKey("Profile", on_delete=models.CASCADE)
   published = models.DateTimeField(auto_now=True)
   message = models.TextField(blank=False)
+  stars = models.TextField(blank=False)
 
   def __str__(self):
     ''' Return a string representation of object '''

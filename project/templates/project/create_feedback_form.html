@@ -1,24 +1,32 @@
 <!-- project/templates/project/create_feedback_form.html -->
 
-<h3>Feedback form</h3>
+{% extends 'project/base.html' %}
 
-<form action="{% url 'feedbacks' %}">
-  <table>
-    <!-- feedback msg -->
-    <tr>
-      <td style="font-weight:bold">Enter Feedback</td>
-      <td>
-        <label for="game_name">Message:</label>
-        <input type="text" id="feedback_message">
-      </td>
+{% block content %}
+<h2>Create Feedback</h2>
 
-    </tr>
-
-    <tr>
-      <td></td>
-      <td>
-        <input type="submit">
-      </td>
-    </tr>
-  </table>
+<form method="POST" class="sorting-form">
+  {% csrf_token %}
+  <fieldset>
+    <div class="form-options">
+      <!-- Render form fields manually to match the layout -->
+      {% for field in form %}
+      <label for="{{ field.id_for_label }}">
+        <span>{{ field.label_tag }}</span>
+        {{ field }}
+        {{ field.errors }}
+      </label>
+      {% endfor %}
+    </div>
+    <button type="submit" name="submit" class="btn-submit">Create Status Message</button>
+  </fieldset>
 </form>
+
+<!-- Cancel form -->
+<form action="{% url 'feedbacks' %}">
+  <fieldset>
+    <button type="submit" class="btn-submit">Cancel</button>
+  </fieldset>
+</form>
+
+{% endblock %}

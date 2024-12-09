@@ -9,16 +9,20 @@
 
 <p> all training data used have been personally extracted using Riot Games API throughout the course of a year</p>
 
-<!-- Display feature correlation heatmap -->
-<div class="row">
-  {{heatmap_div|safe}}
-</div>
+<div class="graphs-container" style="display: flex; flex-direction: column; gap: 20px; margin-bottom: 20px;">
+  <!-- Display feature correlation heatmap -->
+  <div class="graph heatmap" style="position: relative; max-width: 800px; margin: 0 auto;">
+    {{heatmap_div|safe}}
+  </div>
 
-<!-- Display feature distributions histograms -->
-<div class="row">
-  {{distributions_div|safe}}
-</div>
+  <!-- Graph filter options -->
+  {% include 'project/graph_search.html' %}
 
+  <!-- Display feature distributions histograms -->
+  <div class="graph distributions" style="flex: 1;">
+    {{distributions_div|safe}}
+  </div>
+</div>
 
 
 

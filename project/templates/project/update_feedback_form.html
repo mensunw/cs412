@@ -1,0 +1,30 @@
+<!-- project/templates/project/update_feedback_form.html -->
+
+{% extends 'project/base.html' %}
+
+{% block content %}
+<h2> Update Feedback </h2>
+
+<!-- display update form -->
+<form method="POST" class="sorting-form">
+  {% csrf_token %}
+  <fieldset>
+    <div class="form-options">
+      <!-- Render form fields manually to match the layout -->
+      {% for field in form %}
+      <label for="{{ field.id_for_label }}">
+        <span>{{ field.label_tag }}</span>
+        {{ field }}
+        {{ field.errors }}
+      </label>
+      {% endfor %}
+    </div>
+    <button type="submit" name="submit" class="btn-submit">Update Feedback</button>
+  </fieldset>
+</form>
+<!-- create a form to cancel -->
+<form action="{% url 'feedbacks'%}">
+  <input type="submit" name="Cancel" class="btn-submit" value="Cancel">
+</form>
+
+{% endblock %}

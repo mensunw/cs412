@@ -4,44 +4,99 @@
 
 {% block content %}
 
-<h1> this will look better i promise. </h1>
-<div class="row">
-  <div>
-    {% include 'project/create_feedback_form.html' %}
+<h1> Feedback Center </h1>
+
+<!-- Sorting options -->
+{% include 'project/sort_feedback_form.html' %}
+
+<div class="feedback-list">
+  {% for f in feedbacks %}
+  <div class="feedback-item">
+    <div class="feedback-header">
+      <div class="feedback-content">
+        <span class="feedback-user">{{ f.profile.first_name }} {{ f.profile.last_name }}</span>
+        <div class="feedback-rating">
+          {% if f.stars == "5" %}
+          <span class="star">★</span>
+          <span class="star">★</span>
+          <span class="star">★</span>
+          <span class="star">★</span>
+          <span class="star">★</span>
+          {% endif%}
+          {% if f.stars == "4" %}
+          <span class="star">★</span>
+          <span class="star">★</span>
+          <span class="star">★</span>
+          <span class="star">★</span>
+          {% endif%}
+          {% if f.stars == "3" %}
+          <span class="star">★</span>
+          <span class="star">★</span>
+          <span class="star">★</span>
+          {% endif%}
+          {% if f.stars == "2" %}
+          <span class="star">★</span>
+          <span class="star">★</span>
+          {% endif%}
+          {% if f.stars == "1" %}
+          <span class="star">★</span>
+          {% endif%}
+        </div>
+      </div>
+      {% if request.user == f.profile.user %}
+      <form action="{% url 'update_feedback' f.pk %}" method="get" class="edit-button">
+        <input type="submit" name="edit" value="Edit">
+      </form>
+      {% endif %}
+    </div>
+    <div class="feedback-message">
+      {{ f.message }}
+    </div>
+    {% if f.get_feedbackResponses %}
+    <div class="feedback-responses">
+      <h3>Developer Response(s):</h3>
+      <ul>
+        {% for response in f.get_feedbackResponses %}
+        <li>{{ response.message }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
   </div>
+  {% endfor %}
 </div>
-<table style="width: 100%; border-collapse: collapse;">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Feedback</th>
 
-    </tr>
-  </thead>
-  <tbody>
-    {% for f in feedbacks %}
-    <tr>
+<!-- navigation for different pages of results -->
+<div class="pagination-container">
+  {% if is_paginated %}
+  <div class="pagination">
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
+      class="btn-pagination">
+      ← Previous
+    </a>
+    {% endif %}
 
-      <td>{{ f.profile.first_name }} {{ f.profile.last_name }}</td>
-      <td>{{f.message}}</td>
+    <span class="pagination-info">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
 
-    </tr>
-    <tr>
-      <td colspan="4">
-        <table style="width: 100%; border-collapse: collapse;">
-          <tbody>
-            {% for response in f.get_feedbackResponses %}
-            <tr>
-              <td style="text-align: center;">RESPONSE: {{ response.message }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
+      class="btn-pagination">
+      Next →
+    </a>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+
+<div class="feedback-section">
+  <h2>Got feedback or want to leave a review?</h2>
+  <p style="text-align:center">Your thoughts and ideas are invaluable!</p>
+  <form action="{% url 'create_feedback' %}">
+    <button type="submit" class="btn-feedback">Add Feedback</button>
+  </form>
+</div>
+
 
 
 {% endblock %}

@@ -4,51 +4,63 @@
 
 {% block content %}
 
-<h1> this will look better </h1>
+<h1 class="page-title">🔮 Predict Your Fate in the Game! 🔮</h1>
 
-<div class="row">
-  {% if form_state == "unsubmitted" %}
-  <div>
-    {% include 'project/create_prediction_form.html' %}
-  </div>
-  {% endif %}
+
+{% if form_state == "unsubmitted" %}
+
+<div class="form-section">
+  {% include 'project/create_prediction_form.html' %}
 </div>
 
-<div class="row">
-  {% if form_state == "submitted_failure" %}
-  <div>
-    {% include 'project/create_prediction_form.html' %}
-  </div>
-  <p> Prediction request failed. please ensure a valid game name and tag line that is currently in a game equal to or
-    greater than 15mins </p>
-  {% endif %}
+{% endif %}
+
+
+
+{% if form_state == "submitted_failure" %}
+
+<div class="form-section">
+  {% include 'project/create_prediction_form.html' %}
+</div>
+<p class="error-text">⚔️ Prediction request failed. Ensure you entered a valid game name/tag and are in an active game
+  lasting 15 minutes or more. ⚔️</p>
+
+
+{% endif %}
+
+
+{% if form_state == "submitted_success" %}
+
+<div class="results-section">
+  <h3 class="success-text">✨ Prediction Submitted! ✨</h3>
+  <p>🔮 Here are the results of your prediction: WIN </p>
+  <a href="{% url 'show_prediction' request.user.pprofile.pk %}" class="action-link">🗨️ Make Another Prediction
+    🗨️</a>
 </div>
 
-<div class="row">
-  {% if form_state == "submitted_success" %}
-  <div>
-    <h3> Prediction Submitted!, here are the prediction results: [grab from context] </h3>
-    <a href="{% url 'show_prediction' request.user.pprofile.pk %}">make another prediction</a>
-  </div>
-  {% endif %}
-</div>
 
-<h2> prediction history </h2>
-<table style="width: 100%; border-collapse: collapse;">
+{% endif %}
+
+<h2 class="history-title">📜 Prediction History 📜</h2>
+<table class="history-table">
   <thead>
     <tr>
-      <th>Match ID</th>
-      <th>Prediction</th>
-      <th>Actual Outcome</th>
+      <th>🕊️ Match ID</th>
+      <th>🔮 Prediction</th>
+      <th>⚔️ Actual Outcome</th>
+      <th>🗑️ Actions</th>
     </tr>
   </thead>
   <tbody>
     {% for prediction in profile.get_predictions %}
     <tr>
-      <td style="text-align: center;">{{ prediction.match_id }}</td>
-      <td style="text-align: center;">{{ prediction.outcome }}</td>
-      <td style="text-align: center;">
-        {{ prediction.correct }}
+      <td class="text-center">{{ prediction.match_id }}</td>
+      <td class="text-center">{{ prediction.outcome }}</td>
+      <td class="text-center">{{ prediction.correct }}</td>
+      <td class="actions">
+        <form action="{% url 'delete_prediction' prediction.pk %}">
+          <button type="submit" class="delete-btn">Delete Prediction</button>
+        </form>
       </td>
     </tr>
     {% endfor %}

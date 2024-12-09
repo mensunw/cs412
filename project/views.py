@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
+from django.db.models.query import QuerySet
 from django.urls import reverse
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
@@ -40,7 +41,7 @@ class ShowAllPredictionsView(ListView):
 
 class ShowPredictionView(View):
   ''' 
-  the view to show one prediction
+  the view to show the prediction screen and one person's prediction history
   '''
 
   template_name = "project/predict.html"
@@ -96,10 +97,105 @@ class ShowPredictionView(View):
 class ShowAllFeedbacksView(ListView):
   '''
   View to show all feedback for feedback center
+  Changes based on the sorting query from user, default is by recent
   '''
   model = Feedback
   template_name = "project/feedbacks.html"
   context_object_name = 'feedbacks'
+  paginate_by = 8
+
+  def get_queryset(self) -> QuerySet[any]:
+    '''Limit the results to a small number of records'''
+
+    # default query set is all of the records:
+    qs = super().get_queryset()
+
+    # Default sort method
+    sort_method = "recent"
+
+    # Change sort method based on input
+    if 'sort' in self.request.GET:
+      sort_method = self.request.GET['sort']
+    
+    # sort results by recent
+    if sort_method == "recent":
+      qs = qs.order_by('-published')
+  
+    if sort_method == "critical":
+      qs = qs.order_by('stars')
+
+    if sort_method == "favorable":
+      qs = qs.order_by('-stars')
+
+    return qs
+      
+
+class CreateFeedback(CreateView):
+  '''
+  View to create feedback from a user for a feedback center
+  '''
+  form_class = CreateFeedbackForm
+  template_name = "project/create_feedback_form.html"
+
+  def get_context_data(self, **kwargs: any) -> dict[str, any]:
+    # get context data from superclass
+    context = super().get_context_data(**kwargs)
+
+    # get profile
+    profile = Profile.objects.get(user=self.request.user)
+
+    # add profile referred to by URL into this context
+    context['profile'] = profile 
+    return context
+
+
+  def get_success_url(self) -> str:
+    ''' 
+    return the url to redirect to on success 
+    '''
+    # find the profile identified by the PK from the URL pattern
+    profile = Profile.objects.get(user=self.request.user)
+    return reverse('feedbacks')
+  
+  def form_valid(self, form):
+    ''' this method is called after form is validated, before saving data to database '''
+
+    profile = Profile.objects.get(user=self.request.user)
+
+    # attach this profile to the instance of the status message to set its FK
+    form.instance.profile = profile
+
+    # save the feedback to database
+    form.save()
+    
+    # delegate work to superclass method
+    return super().form_valid(form)
+
+class UpdateFeedbackView(UpdateView):
+  ''' view for updating feedback '''
+  model = Feedback
+  form_class = UpdateFeedbackForm
+  template_name = 'project/update_feedback_form.html'
+
+  def get_context_data(self, **kwargs: any) -> dict[str, any]:
+    # get context data from superclass
+    context = super().get_context_data(**kwargs)
+
+    # get the feedback object based on its pk
+    feedback = self.get_object()
+
+    # access the related Profile 
+    profile = feedback.profile
+
+    # add status
+    context['feedback'] = feedback
+    # add profile 
+    context['profile'] = profile 
+    return context
+  
+  def get_success_url(self) -> str:
+    ''' return the url to redirect to on success '''
+    return reverse('feedbacks')
 
 class GraphListView(ListView):
   '''
@@ -109,6 +205,22 @@ class GraphListView(ListView):
   template_name = 'project/graphs.html'
   model = Game
   context_object_name = "games"
+
+  def get_queryset(self) -> QuerySet[any]:
+    '''Limit the results based on the filter'''
+
+    # default query set is all of the records:
+    qs = super().get_queryset()
+
+    if 'outcome' in self.request.GET:
+      # filter results by either only wins or loss
+      outcome = self.request.GET['outcome']
+      if outcome != "BOTH":
+        numerical_outcome = 0
+        if outcome == "WIN":
+          numerical_outcome = 1
+        qs = qs.filter(win=numerical_outcome)
+    return qs
 
   def get_context_data(self, **kwargs):
     # Get the superclass version of context
@@ -140,6 +252,8 @@ class GraphListView(ListView):
     heatmap_div = offline.plot(heatmap, auto_open=False, output_type='div')
     context['heatmap_div'] = heatmap_div
 
+    # Use filtered QS for these histograms
+    filtered_qs = 0
     # Convert query set to DataFrame
     data = pd.DataFrame.from_records(qs.values('gold_ratio', 'xp_ratio', 'cs_ratio', 'kills_ratio', 'win'))
 
@@ -181,3 +295,34 @@ class GraphListView(ListView):
     distributions_div = go.Figure.to_html(fig, full_html=False)
     context['distributions_div'] = distributions_div
     return context
+  
+class DeletePredictionView(DeleteView):
+  ''' view for deleting prediction '''
+  model = Prediction
+  template_name = 'project/delete_prediction_form.html'
+
+  def get_context_data(self, **kwargs: any) -> dict[str, any]:
+    # get context data from superclass
+    context = super().get_context_data(**kwargs)
+
+    # get the prediction object based on its pk
+    prediction = self.get_object()
+
+    # access the related Profile 
+    profile = prediction.profile
+
+    # add status
+    context['prediction'] = prediction
+    # add profile 
+    context['profile'] = profile 
+    return context
+
+  def get_success_url(self) -> str:
+    ''' return the url to redirect to on success '''
+    # get the prediction object based on its pk
+    prediction = self.get_object()
+
+    # get profile
+    profile = prediction.profile
+  
+    return reverse('show_prediction', kwargs={'pk':profile.pk})

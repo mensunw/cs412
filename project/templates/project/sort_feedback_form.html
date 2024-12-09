@@ -1,0 +1,23 @@
+<!-- project/templates/project/sort_feedback_form.html -->
+
+<form action="{% url 'feedbacks' %}" class="sorting-form">
+  {% csrf_token %}
+  <fieldset>
+    <legend>Sort Feedback</legend>
+    <div class="form-options">
+      <label>
+        <input type="radio" name="sort" value="recent">
+        <span>Recent</span>
+      </label>
+      <label>
+        <input type="radio" name="sort" value="critical">
+        <span>Critical</span>
+      </label>
+      <label>
+        <input type="radio" name="sort" value="favorable">
+        <span>Favorable</span>
+      </label>
+    </div>
+    <button type="submit" class="btn-submit">Sort</button>
+  </fieldset>
+</form>

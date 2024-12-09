@@ -1,0 +1,39 @@
+<!-- project/templates/project/delete_prediction_form.html -->
+
+{% extends 'project/base.html' %}
+
+{% block content %}
+<h2> Confirm Deletion of Status </h2>
+
+<!-- display confirmation form -->
+<form method="POST" class="sorting-form">
+  {% csrf_token %}
+  <fieldset>
+    <legend style="color:red">Delete this prediction?</legend>
+    <table>
+      <thead>
+        <tr>
+          <th>🕊️ Match ID</th>
+          <th>🔮 Prediction</th>
+          <th>⚔️ Actual Outcome</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="text-center">{{ prediction.match_id }}</td>
+          <td class="text-center">{{ prediction.outcome }}</td>
+          <td class="text-center">{{ prediction.correct }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="color:rgb(168, 0, 0)">Are you sure you want to delete this prediction?</h3>
+    <div class="form-options">
+      <button type="submit" name="submit" class="btn-submit">Yes</button>
+      <a href="{% url 'show_prediction' profile.pk %}" class="btn-submit"
+        style="text-decoration:none; text-align:center;">No</a>
+    </div>
+  </fieldset>
+</form>
+
+{% endblock %}
