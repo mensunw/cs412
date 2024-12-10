@@ -6,43 +6,57 @@
 
 <h1> Feedback Center </h1>
 
-<!-- Sorting options -->
+<!-- Sorting options form -->
 {% include 'project/sort_feedback_form.html' %}
 
+<!-- Show every feedback -->
 <div class="feedback-list">
   {% for f in feedbacks %}
   <div class="feedback-item">
     <div class="feedback-header">
       <div class="feedback-content">
         <span class="feedback-user">{{ f.profile.first_name }} {{ f.profile.last_name }}</span>
+        <!-- rating for each one -->
         <div class="feedback-rating">
           {% if f.stars == "5" %}
-          <span class="star">★</span>
-          <span class="star">★</span>
-          <span class="star">★</span>
-          <span class="star">★</span>
-          <span class="star">★</span>
+          <span class="star-filled">★</span>
+          <span class="star-filled">★</span>
+          <span class="star-filled">★</span>
+          <span class="star-filled">★</span>
+          <span class="star-filled">★</span>
           {% endif%}
           {% if f.stars == "4" %}
-          <span class="star">★</span>
-          <span class="star">★</span>
-          <span class="star">★</span>
-          <span class="star">★</span>
+          <span class="star-filled">★</span>
+          <span class="star-filled">★</span>
+          <span class="star-filled">★</span>
+          <span class="star-filled">★</span>
+          <span class="star">☆</span>
           {% endif%}
           {% if f.stars == "3" %}
-          <span class="star">★</span>
-          <span class="star">★</span>
-          <span class="star">★</span>
+          <span class="star-filled">★</span>
+          <span class="star-filled">★</span>
+          <span class="star-filled">★</span>
+          <span class="star">☆</span>
+          <span class="star">☆</span>
           {% endif%}
           {% if f.stars == "2" %}
-          <span class="star">★</span>
-          <span class="star">★</span>
+          <span class="star-filled">★</span>
+          <span class="star-filled">★</span>
+          <span class="star">☆</span>
+          <span class="star">☆</span>
+          <span class="star">☆</span>
           {% endif%}
           {% if f.stars == "1" %}
-          <span class="star">★</span>
+          <span class="star-filled">★</span>
+          <span class="star">☆</span>
+          <span class="star">☆</span>
+          <span class="star">☆</span>
+          <span class="star">☆</span>
           {% endif%}
+          • <span class="timestamp">{{ f.published|date:"M d, Y" }}</span>
         </div>
       </div>
+      <!-- edit button for feedback that correlates to user -->
       {% if request.user == f.profile.user %}
       <form action="{% url 'update_feedback' f.pk %}" method="get" class="edit-button">
         <input type="submit" name="edit" value="Edit">
@@ -89,6 +103,7 @@
   {% endif %}
 </div>
 
+<!-- navigates to create feedback form -->
 <div class="feedback-section">
   <h2>Got feedback or want to leave a review?</h2>
   <p style="text-align:center">Your thoughts and ideas are invaluable!</p>

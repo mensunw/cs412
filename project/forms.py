@@ -27,3 +27,13 @@ class UpdateFeedbackForm(forms.ModelForm):
     ''' associate this html form with status msg data model '''
     model = Feedback
     fields = ["stars","message"] 
+
+class UpdatePredictionForm(forms.ModelForm):
+  ''' 
+    A custom form for updating a prediction
+  '''
+
+  class Meta:
+    ''' associate this html form with status msg data model '''
+    model = Prediction
+    fields = ["correct"] 

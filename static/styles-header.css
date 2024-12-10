@@ -1,7 +1,7 @@
 /* Header Styling */
 nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 15px 30px;
   background-color: #383737;

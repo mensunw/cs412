@@ -148,18 +148,33 @@ img {
 }
 
 .feedback-rating .star {
-  color: gold;
-  font-size: 1.2em;
+  color: gray;
+  font-size: 1.0em;
   margin: 2px;
+}
+
+.feedback-rating .star-filled {
+  color: gold;
 }
 
 .edit-button {
   background-color: transparent;
   border: none;
-  color: #e43f5a;
+  color: #f0a500;
   cursor: pointer;
   font-size: 1em;
 }
+
+.edit-button2 {
+  background-color: #f0a500;
+  color: rgb(0, 0, 0);
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
 
 .feedback-user {
   font-size: 1.2em;
@@ -247,14 +262,14 @@ img {
 }
 
 .form-options input[type="radio"] {
-  accent-color: #e43f5a;
+  accent-color: #f0a500;
   transform: scale(1.2);
 }
 
 .btn-submit {
   display: block;
   width: 100%;
-  background-color: #e43f5a;
+  background-color: #f0a500;
   color: #ececec;
   font-size: 1.2em;
   font-weight: bold;
@@ -267,8 +282,8 @@ img {
 }
 
 .btn-submit:hover {
-  background-color: #f0a500;
-  color: #162447;
+  background-color: #000000;
+  color: #ffffff;
   box-shadow: 0px 0px 10px #f0a500;
 }
 
@@ -303,7 +318,7 @@ img {
 
 .btn-pagination:hover {
   background-color: #f0a500;
-  color: #162447;
+  color: #000000;
   box-shadow: 0px 0px 10px #f0a500;
 }
 
@@ -330,7 +345,7 @@ img {
 }
 
 .btn-feedback {
-  background-color: #e43f5a;
+  background-color: #f0a500;
   color: #ececec;
   padding: 10px 20px;
   border: none;
@@ -342,8 +357,8 @@ img {
 }
 
 .btn-feedback:hover {
-  background-color: #f0a500;
-  color: #162447;
+  background-color: #000000;
+  color: #ffffff;
   box-shadow: 0px 0px 10px #f0a500;
 }
 
@@ -391,7 +406,7 @@ img {
 
 .delete-btn {
   background-color: #b22222;
-  color: white;
+  color: rgb(0, 0, 0);
   border: none;
   padding: 5px 10px;
   border-radius: 4px;
@@ -431,4 +446,157 @@ img {
 
 .history-table tbody tr:nth-child(odd) {
   background: #333;
+}
+
+.model-item,
+.data-item {
+  margin-bottom: 20px;
+}
+
+.model-item p,
+.data-item p {
+  margin: 0;
+}
+
+.big {
+  font-size: 48px;
+  font-weight: bold;
+  color: #a1eafb;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+  margin-right: 8px;
+}
+
+.hero-section {
+  text-align: center;
+  padding: 50px 20px;
+  background: rgba(35, 47, 89, 0.9);
+  border-radius: 15px;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);
+  margin-bottom: 20px;
+}
+
+.hero-subtitle {
+  font-size: 1.5em;
+  font-style: italic;
+  color: #a1eafb;
+  margin-top: 15px;
+}
+
+.call-to-action {
+  text-align: center;
+  margin: 30px 0;
+  padding: 20px;
+  background: rgba(22, 36, 71, 0.8);
+  border: 2px solid #f0a500;
+  border-radius: 12px;
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4);
+}
+
+.cta-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #f0a500;
+  color: #ececec;
+  font-size: 1.2em;
+  font-weight: bold;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #000000;
+  color: #ffffff;
+  box-shadow: 0px 0px 10px #f0a500;
+}
+
+.info-section {
+  padding: 20px;
+  background: rgba(35, 47, 89, 0.9);
+  border-radius: 12px;
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4);
+}
+
+.info-section h2 {
+  text-align: center;
+  color: #f0a500;
+  margin-bottom: 20px;
+}
+
+.info-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 700px;
+  color: #ececec;
+  line-height: 1.8em;
+}
+
+.info-list li {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  position: relative;
+  padding-left: 25px;
+}
+
+.info-list li::before {
+  content: '✨';
+  position: absolute;
+  left: 0;
+  color: #f0a500;
+}
+
+.footer-section {
+  text-align: center;
+  padding: 10px;
+  font-size: 1.1em;
+  background: #162447;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.sign-in-container {
+  width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background: rgba(22, 36, 71, 0.8);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sign-in-header {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.credentials-section {
+  margin-bottom: 20px;
+}
+
+.credentials-title {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.credentials-list {
+  list-style: none;
+  padding: 0;
+}
+
+.credentials-list li {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.sign-in-form .form-fields {
+  margin-bottom: 15px;
+}
+
+.feedback-rating .timestamp {
+  color: gray;
 }

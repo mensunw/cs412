@@ -14,6 +14,7 @@ urlpatterns = [
   # enforces a logged-in user
   path('predict/<int:pk>', views.ShowPredictionView.as_view(), name="show_prediction"),
   path('predict/prediction/<int:pk>/delete', views.DeletePredictionView.as_view(), name="delete_prediction"),
+  path('predict/prediction/<int:pk>/update', views.UpdatePredictionView.as_view(), name="update_prediction"),
   
   # feedback center
   path('feedback/', views.ShowAllFeedbacksView.as_view(), name="feedbacks"),

@@ -5,9 +5,7 @@
 
 {% block content %}
 
-<h1> display kewl data visualization graphs here </h1>
-
-<p> all training data used have been personally extracted using Riot Games API throughout the course of a year</p>
+<h1> Data Visualizations </h1>
 
 <div class="graphs-container" style="display: flex; flex-direction: column; gap: 20px; margin-bottom: 20px;">
   <!-- Display feature correlation heatmap -->
@@ -19,7 +17,7 @@
   {% include 'project/graph_search.html' %}
 
   <!-- Display feature distributions histograms -->
-  <div class="graph distributions" style="flex: 1;">
+  <div class="graph distributions" style="flex: 1; overflow: auto;">
     {{distributions_div|safe}}
   </div>
 </div>

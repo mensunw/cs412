@@ -1,5 +1,6 @@
 <!-- project/templates/project/create_prediction_form.html -->
 
+<!-- show the create a prediction form -->
 <form action="{% url 'show_prediction' request.user.pprofile.pk %}" method="POST" class="sorting-form">
   {% csrf_token %}
   <fieldset>

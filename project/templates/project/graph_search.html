@@ -1,30 +1,26 @@
 <!-- project/templates/project/graph_search_form.html -->
 
-<h3>Filter Graph Options</h3>
-
-<form action="{% url 'graphs' %}">
+<form action="{% url 'graphs' %}" method="GET" class="sorting-form">
   {% csrf_token %}
-  <table>
-    <!-- filter for outcome of win OR no win -->
-    <tr>
-      <td style="font-weight:bold">Outcome</td>
-      <td>
-        <input type="radio" name="outcome" value="WIN"> Win <br>
-        <input type="radio" name="outcome" value="LOSS"> Loss <br>
-      </td>
-    </tr>
-    <tr>
-      <td style="font-weight:bold">Remove Filters</td>
-      <td>
-        <input type="radio" name="outcome" value="BOTH"> Remove <br>
-      </td>
+  <fieldset>
+    <!-- Give filtering options for "WIN" games or "LOSS" games-->
+    <legend>Filter Graph Options</legend>
+    <div class="form-options">
+      <label>
+        <input type="radio" name="outcome" value="WIN">
+        <span>Win</span>
+      </label>
+      <label>
+        <input type="radio" name="outcome" value="LOSS">
+        <span>Loss</span>
+      </label>
+      <label>
 
-    </tr>
-    <tr>
-      <td></td>
-      <td>
-        <input type="submit">
-      </td>
-    </tr>
-  </table>
+        <!-- An option to remove filters -->
+        <input type="radio" name="outcome" value="BOTH">
+        <span>Remove Filters</span>
+      </label>
+    </div>
+    <button type="submit" class="btn-submit">Apply Filters</button>
+  </fieldset>
 </form>

@@ -57,7 +57,8 @@ class Prediction(models.Model):
   profile = models.ForeignKey("Profile", on_delete=models.CASCADE)
   match_id = models.TextField(blank=False)
   outcome = models.TextField(blank=False)
-  correct = models.BooleanField(blank=False)
+  correct = models.TextField(blank=False)
+  published = models.DateTimeField(auto_now=True)
   # NOTE: does NOT connect with Game model
 
   def __str__(self):

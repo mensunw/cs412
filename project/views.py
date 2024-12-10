@@ -8,6 +8,7 @@ from plotly import offline
 import pandas as pd
 from .models import * # import all models
 from .forms import * # import all forms
+from .utils import * # import all utils
 
 # Create your views here.
 def home(request):
@@ -69,16 +70,18 @@ class ShowPredictionView(View):
       game_name = form.cleaned_data.get("game_name")
       tag_line = form.cleaned_data.get("tag_line")
 
+      # TEMPORARILY DISABLED for demo purposes
       # Check to see if this ign is participating in a live game
-
+      #verify_game(game_name,tag_line)
       # Call function to extract features, and call model
+      #get_prediction(game_name,tag_line)
 
       # Create a new prediction 
       Prediction.objects.create(
         profile=profile,
         match_id="NA193873",
         outcome="WIN",
-        correct=True,
+        correct="???",
       )
 
       # Display success message with updated predictions
@@ -317,6 +320,38 @@ class DeletePredictionView(DeleteView):
     context['profile'] = profile 
     return context
 
+  def get_success_url(self) -> str:
+    ''' return the url to redirect to on success '''
+    # get the prediction object based on its pk
+    prediction = self.get_object()
+
+    # get profile
+    profile = prediction.profile
+  
+    return reverse('show_prediction', kwargs={'pk':profile.pk})
+
+class UpdatePredictionView(UpdateView):
+  ''' view for updating prediction '''
+  model = Prediction
+  form_class = UpdatePredictionForm
+  template_name = 'project/update_prediction_form.html'
+
+  def get_context_data(self, **kwargs: any) -> dict[str, any]:
+    # get context data from superclass
+    context = super().get_context_data(**kwargs)
+
+    # get the prediction object based on its pk
+    prediction = self.get_object()
+
+    # access the related Profile 
+    profile = prediction.profile
+
+    # add status
+    context['prediction'] = prediction
+    # add profile 
+    context['profile'] = profile 
+    return context
+  
   def get_success_url(self) -> str:
     ''' return the url to redirect to on success '''
     # get the prediction object based on its pk

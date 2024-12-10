@@ -2,27 +2,29 @@
 {% extends 'project/base.html' %}
 {% block content %}
 
-<h2>Login</h2>
+<!-- Show login page-->
+<div class="sign-in-container">
+  <h2 class="sign-in-header">Sign In</h2>
+  <div class="credentials-section">
+    <!-- temporary credentials for any user -->
+    <h3 class="credentials-title">Please use these credentials for now:</h3>
+    <ul class="credentials-list">
+      <li><strong>Username:</strong> yash</li>
+      <li><strong>Password:</strong> finalproject</li>
+    </ul>
+  </div>
+  <form method="POST" class="sign-in-form">
+    {% csrf_token %}
+    <div class="form-fields">
+      {{ form }}
+    </div>
+    <input type="submit" name="submit" class="cta-button" value="Sign In" style="width:100%">
+    {% if request.GET.next %}
+    <input type="hidden" name="next" value="{{ request.GET.next }}">
+    {% else %}
+    <input type="hidden" name="next" value="{% url 'home' %}">
+    {% endif %}
+  </form>
+</div>
 
-<h3> PLEASE ENTER THESE CREDENTIALS:
-
-
-</h3>
-<h4>username: yash </h4>
-<h4>password: finalproject</h4>
-
-<form method="POST">
-  {% csrf_token %}
-  {{form}}
-
-  <input type="submit" name="submit" value="Login">
-  <!-- what page to show next, i.e., after login success -->
-  {% if request.GET.next %}
-  <input type="hidden" name="next" value="{{request.GET.next}}">
-  {% else %}
-  <input type="hidden" name="next" value="{% url 'home' %}">
-  {% endif %}
-</form>
-
-<hr>
 {% endblock %}

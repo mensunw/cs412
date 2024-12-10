@@ -21,27 +21,29 @@
 <body>
   <nav>
     <ul>
-      <!-- URLS that don't depend on authenticated user -->
+      <!-- Home page -->
       <li><a href="{% url 'home' %}">Home</a></li>
-      <li><a href="{% url 'graphs' %}">Data Visualization</a></li>
 
       <!-- Requires logged in user -->
       {% if request.user.is_authenticated %}
       <li><a href="{% url 'show_prediction' request.user.pprofile.pk %}">Predict Game</a></li>
+      <li><a href="{% url 'graphs' %}">Data Visualization</a></li>
       <li><a href="{% url 'feedbacks' %}">Feedback Center</a></li>
-      <li><a href="{% url 'about' %}">About Me</a></li>
+      <li><a href="{% url 'about' %}">About</a></li>
       <li> Logged in as: {{ request.user }}.</li>
 
       <form action="{% url 'logout' %}" method="POST">
         {% csrf_token %}
-        <input type="submit" value="Logout">
+        <input type="submit" class="delete-btn" value="Logout">
       </form>
 
       {% else %}
+      <!-- Show login page if not authenticated for the necessary pages -->
       <li><a href="{% url 'login' %}">Predict Game</a></li>
-      <li><a href="{% url 'login' %}">Login</a></li>
+      <li><a href="{% url 'graphs' %}">Data Visualization</a></li>
       <li><a href="{% url 'login' %}">Feedback Center</a></li>
       <li><a href="{% url 'about' %}">About</a></li>
+      <li><a href="{% url 'login' %}">Login</a></li>
       {% endif %}
 
     </ul>
@@ -59,9 +61,9 @@
       <div class="footer-right">
         <h4>Follow Me</h4>
         <!-- only for display reasons, not putting actual links! -->
-        <a href="#">Instagram</a>
-        <a href="#">LinkedIn</a>
-        <a href="#">GitHub</a>
+        <a href="https://www.instagram.com/mensunwang/" target="_blank">Instagram</a>
+        <a href="https://www.linkedin.com/in/mensun/" target="_blank">LinkedIn</a>
+        <a href="https://github.com/mensunw" target="_blank">GitHub</a>
       </div>
     </div>
     <div class="footer-bottom">

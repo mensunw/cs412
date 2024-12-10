@@ -4,6 +4,36 @@
 
 {% block content %}
 
-<h1>Welcome to the Forfeit (FF) Detector! </h1>
+<div class="homepage-container">
+  <!-- hero section -->
+  <header class="hero-section">
+    <h1>Welcome to the Forfeit (FF) Detector!</h1>
+    <p class="hero-subtitle">Should you forfeit a game or fight for victory? Let us guide you!</p>
+  </header>
+
+  <main class="main-content">
+    <!-- sign up section -->
+    <div class="call-to-action">
+      <p>🌟 Create an account and predict your game's outcome with advanced insights.</p>
+      <a href="{% url 'login' %}" class="cta-button">Sign Up Now</a>
+    </div>
+
+    <!-- features section -->
+    <section class="info-section">
+      <h2>What Can You Do Here?</h2>
+      <ul class="info-list">
+        <li>💡 Predict the outcome of your game in the "Predict Game" tab.</li>
+        <li>📊 Explore fascinating insights on the "Data Visualization" page.</li>
+        <li>✍️ Share your thoughts and suggestions in the "Feedback" section.</li>
+        <li>🌐 Learn more about this project on the "About Me" page.</li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- Additional footer section -->
+  <footer class="footer-section">
+    <p>✨ Discover the magic of predictive analytics and elevate your gameplay! ✨</p>
+  </footer>
+</div>
 
 {% endblock %}
